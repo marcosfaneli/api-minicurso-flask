@@ -54,6 +54,17 @@ def inserir():
     return jsonify({'success': True}), 200;
 
 
+@app.route('/feito/<codigo>', methods=['PUT'])
+def concluir_tarefa(codigo: int):
+    try:
+        if remover(codigo) == False:
+            raise Exception("Não encontrado")
+    except:
+        return jsonify({'success': False, 'message': "Não encontrado"}), 400
+    else:
+        return jsonify({'success': True}), 200;
+
+
 @app.route('/<codigo>', methods=['PUT'])
 def editar(codigo: int):
     descricao = request.json['descricao']
@@ -83,4 +94,4 @@ def index():
     return "Hello world"
 
 
-app.run(debug=True)
+app.run(debug=True) #, host='192.168.0.14')
